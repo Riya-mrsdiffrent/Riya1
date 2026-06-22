@@ -1,0 +1,170 @@
+/* Container for all romantic background elements */
+#romantic-bg-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Ensure key page content cards are in front of background elements */
+.card, header, .navigation-container, .action-container, .proposal-section, .btn-group {
+  position: relative;
+  z-index: 10;
+}
+
+/* Floating particle styles */
+.romantic-floating-item {
+  position: absolute;
+  bottom: -60px;
+  pointer-events: none;
+  user-select: none;
+  animation: floatUpAndSway linear infinite;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@keyframes floatUpAndSway {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.65;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(var(--sway-x), -115vh, 0) rotate(var(--rotate-deg)) scale(var(--scale-end));
+    opacity: 0;
+  }
+}
+
+/* Scrapbook sticker styles */
+.romantic-sticker {
+  position: absolute;
+  pointer-events: auto; /* Allow hover and click micro-interactions! */
+  user-select: none;
+  z-index: 2;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  will-change: transform;
+  
+  /* Premium die-cut sticker outline effect */
+  filter: drop-shadow(2.5px 0 0 #fff) 
+          drop-shadow(-2.5px 0 0 #fff) 
+          drop-shadow(0 2.5px 0 #fff) 
+          drop-shadow(0 -2.5px 0 #fff)
+          drop-shadow(2px 2px 0 #fff) 
+          drop-shadow(-2px -2px 0 #fff) 
+          drop-shadow(2px -2px 0 #fff) 
+          drop-shadow(-2px 2px 0 #fff)
+          drop-shadow(0 8px 18px rgba(232, 132, 156, 0.25));
+          
+  animation: stickerBob 6s ease-in-out infinite alternate;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
+  cursor: pointer;
+}
+
+/* Interactive hover state for stickers */
+.romantic-sticker:hover {
+  transform: scale(1.18) rotate(15deg);
+  filter: drop-shadow(2.5px 0 0 #fff) 
+          drop-shadow(-2.5px 0 0 #fff) 
+          drop-shadow(0 2.5px 0 #fff) 
+          drop-shadow(0 -2.5px 0 #fff)
+          drop-shadow(2px 2px 0 #fff) 
+          drop-shadow(-2px -2px 0 #fff) 
+          drop-shadow(2px -2px 0 #fff) 
+          drop-shadow(-2px 2px 0 #fff)
+          drop-shadow(0 14px 28px rgba(232, 132, 156, 0.42));
+}
+
+@keyframes stickerBob {
+  0% {
+    transform: translateY(0) rotate(var(--base-rotation, 0deg));
+  }
+  100% {
+    transform: translateY(-18px) rotate(calc(var(--base-rotation, 0deg) + var(--bob-rotation, 4deg)));
+  }
+}
+
+/* Positioning for stickers on desktop viewports */
+.sticker-top-left {
+  top: 8%;
+  left: 6%;
+  --base-rotation: -12deg;
+  --bob-rotation: 5deg;
+}
+
+.sticker-top-right {
+  top: 10%;
+  right: 7%;
+  --base-rotation: 15deg;
+  --bob-rotation: -6deg;
+}
+
+.sticker-bottom-left {
+  bottom: 12%;
+  left: 5%;
+  --base-rotation: -8deg;
+  --bob-rotation: 6deg;
+}
+
+.sticker-bottom-right {
+  bottom: 10%;
+  right: 6%;
+  --base-rotation: 18deg;
+  --bob-rotation: -5deg;
+}
+
+/* Extra decorative stickers near the sides for larger screens */
+.sticker-mid-left {
+  top: 48%;
+  left: 3%;
+  --base-rotation: 6deg;
+  --bob-rotation: -4deg;
+}
+
+.sticker-mid-right {
+  top: 52%;
+  right: 3%;
+  --base-rotation: -14deg;
+  --bob-rotation: 6deg;
+}
+
+/* Responsiveness: Adjust positions and sizes on tablet viewports */
+@media (max-width: 1024px) {
+  .romantic-sticker {
+    font-size: 2.2rem;
+  }
+  .sticker-top-left { left: 3%; top: 5%; }
+  .sticker-top-right { right: 3%; top: 6%; }
+  .sticker-bottom-left { left: 3%; bottom: 8%; }
+  .sticker-bottom-right { right: 3%; bottom: 6%; }
+  .sticker-mid-left, .sticker-mid-right {
+    display: none;
+  }
+}
+
+/* Mobile: hide stickers to ensure content readability without overlays */
+@media (max-width: 680px) {
+  .romantic-sticker {
+    display: none;
+  }
+}
+
+/* Accessibility: prefers-reduced-motion support */
+@media (prefers-reduced-motion: reduce) {
+  .romantic-floating-item {
+    animation: none !important;
+    display: none;
+  }
+  .romantic-sticker {
+    animation: none !important;
+    transform: rotate(var(--base-rotation, 0deg)) !important;
+  }
+  .romantic-sticker:hover {
+    transform: scale(1.05) rotate(var(--base-rotation, 0deg)) !important;
+  }
+}

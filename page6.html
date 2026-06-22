@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="romantic.css">
 
   <style>
     :root {
@@ -94,28 +95,7 @@
       100% { transform: translate(-50%, -50%) scale(1.15); }
     }
 
-    /* Floating hearts */
-    .hearts-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .heart {
-      position: absolute;
-      bottom: -60px;
-      font-size: 1.5rem;
-      animation: floatUp linear infinite;
-      opacity: 0;
-    }
-
-    @keyframes floatUp {
-      0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-      10%  { opacity: 0.9; }
-      90%  { opacity: 0.6; }
-      100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
+    /* Background elements handled via romantic.css */
 
     /* Card */
     .card {
@@ -271,8 +251,7 @@
     <div class="blob blob-rose"></div>
   </div>
 
-  <!-- Floating hearts -->
-  <div class="hearts-container" id="hearts-container"></div>
+  <!-- Floating hearts and flowers handled by romantic.js -->
 
   <!-- Main Card -->
   <main class="card">
@@ -304,37 +283,6 @@
 
   </main>
 
-  <script>
-    // Spawn floating hearts
-    const heartsEl = document.getElementById('hearts-container');
-    const heartEmojis = ['💗', '💖', '💓', '💝', '❤️', '🌸', '💞'];
-
-    function spawnHeart() {
-      const heart = document.createElement('span');
-      heart.classList.add('heart');
-      heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-
-      const leftPct = Math.random() * 100;
-      const duration = 4 + Math.random() * 5;
-      const delay    = Math.random() * 3;
-      const size     = 1 + Math.random() * 1.5;
-
-      heart.style.left            = `${leftPct}%`;
-      heart.style.animationDuration = `${duration}s`;
-      heart.style.animationDelay   = `${delay}s`;
-      heart.style.fontSize          = `${size}rem`;
-
-      heartsEl.appendChild(heart);
-
-      // Remove after animation to avoid DOM bloat
-      setTimeout(() => heart.remove(), (duration + delay) * 1000 + 500);
-    }
-
-    // Spawn hearts continuously
-    setInterval(spawnHeart, 400);
-    // Burst of hearts on load
-    for (let i = 0; i < 12; i++) spawnHeart();
-  </script>
-
+  <script src="romantic.js" defer></script>
 </body>
 </html>
